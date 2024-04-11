@@ -52,6 +52,12 @@
     #define DC_MOTOR_PWM_RATE   MOTOR34_8KHZ    // PWM rate for DC motors
     #define STEPPER1_PWM_RATE   MOTOR12_64KHZ   // PWM rate for stepper 1
     #define STEPPER2_PWM_RATE   MOTOR34_64KHZ   // PWM rate for stepper 2
+
+    // Arduino pin names for interface to 74HCT595 latch
+    #define MOTORLATCH 12
+    #define MOTORCLK 4
+    #define MOTORENABLE 7
+    #define MOTORDATA 8
     
 #elif defined(__PIC32MX__)
     //#define MOTORDEBUG 1
@@ -91,7 +97,41 @@
     // since there's only one timebase for all 4 PWM outputs
     #define STEPPER1_PWM_RATE   MOTOR12_39KHZ
     #define STEPPER2_PWM_RATE   MOTOR34_39KHZ
+
+    // Arduino pin names for interface to 74HCT595 latch
+    #define MOTORLATCH 12
+    #define MOTORCLK 4
+    #define MOTORENABLE 7
+    #define MOTORDATA 8
     
+#elif defined(ARDUINO_D1_UNO32)
+
+    #define MICROSTEPS 16                       // 8 or 16
+
+    // Wemos D1 R32 Motor Pins
+    #define MOTOR1GPIO 23
+    #define MOTOR2GPIO 25
+    #define MOTOR3GPIO 27
+    #define MOTOR4GPIO 16
+
+    // LEDC Channels
+    #define MOTOR1LEDC 0
+    #define MOTOR2LEDC 1
+    #define MOTOR3LEDC 2
+    #define MOTOR4LEDC 3
+
+    // PWM properties
+    #define DC_MOTOR_PWM_RATE 5000
+    #define DC_MOTOR_PWM_RESOLUTION 8
+    #define STEPPER1_PWM_RATE   5000   // PWM rate for stepper 1
+    #define STEPPER2_PWM_RATE   5000   // PWM rate for stepper 2
+
+    // Arduino pin names for interface to 74HCT595 latch
+    #define MOTORLATCH 19
+    #define MOTORCLK 17
+    #define MOTORENABLE 14
+    #define MOTORDATA 12
+
 #endif
 
 // Bit positions in the 74HCT595 shift register output
@@ -134,12 +174,6 @@
 #define SER_PORT PORTB
 */
 
-// Arduino pin names for interface to 74HCT595 latch
-#define MOTORLATCH 12
-#define MOTORCLK 4
-#define MOTORENABLE 7
-#define MOTORDATA 8
-
 class AFMotorController
 {
   public:
@@ -153,12 +187,13 @@ class AFMotorController
 class AF_DCMotor
 {
  public:
-  AF_DCMotor(uint8_t motornum, uint8_t freq = DC_MOTOR_PWM_RATE);
+  AF_DCMotor(uint8_t motornum, uint16_t freq = DC_MOTOR_PWM_RATE);
   void run(uint8_t);
   void setSpeed(uint8_t);
 
  private:
-  uint8_t motornum, pwmfreq;
+  uint8_t motornum;
+  uint16_t pwmfreq;
 };
 
 class AF_Stepper {

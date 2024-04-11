@@ -1,6 +1,8 @@
-This library is old and deprecated - and the hardware disconinued years ago. V2 of the shield uses i2c only and works with anything that has I2C support (e.g. all arduinos) without endless incompatibilities and porting requirements! :)
--> https://www.adafruit.com/products/1438
+This fork of the Adafruit Motor Shield v1 library adds support for the Wemos D1 R32 (ESP32) board.
 
+While the v1 of the motor shield is antiquated and inefficient, it is still the cheapest motor shield available.  In combination with the Wemos D1 R32 board, it makes a great, economical platform for 3D printed robots that are designed around the Arduino Uno/Shield form factor (e.g. SMARS).
+
+To install, click the "Code" dropdown button above, then click "Download ZIP".  Extract the folder "Adafruit-Motor-Shield-library" to your Arduino IDE "libraries" folder.
 --------------
 
 This is the August 12, 2009 Adafruit Motor shield firmware with basic Microstepping support. Works with all Arduinos and the Mega
